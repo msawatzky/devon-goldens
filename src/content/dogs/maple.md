@@ -1,6 +1,6 @@
 ---
 name: Bailey
-label: Bailey (Mama)
+label: Bailey
 image: /images/dogs/bailey.jpg
 group: Parents
 role: Mama

@@ -1,6 +1,6 @@
 ---
 name: Mr Miagi
-label: Mr. Miagi (Miggy) - Stud
+label: Mr. Miagi (Miggy)
 image: /images/dogs/mr-miagi.jpg
 group: Parents
 role: Stud

@@ -90,7 +90,7 @@ const getDisplayImage = (entry: (typeof dogs)[number]) => {
 			<h2 class="section-banner-title text-3xl font-semibold text-white transition-all duration-300 md:text-4xl">Meet the Parents</h2>
 		</div>
 		<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
-			<div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+			<div class="grid grid-cols-2 gap-8 md:grid-cols-3">
 				{parentDogs.map((dog) => (
 					<article>
 						<button
@@ -127,7 +127,7 @@ const getDisplayImage = (entry: (typeof dogs)[number]) => {
 				<h2 class="section-banner-title text-3xl font-semibold text-[#2f2e17] transition-all duration-300 md:text-4xl">Previous Litter</h2>
 			</div>
 			<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
-				<div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+				<div class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
 					{previousLitterPuppies.map((dog) => (
 						<article>
 							<button
@@ -160,7 +160,7 @@ const getDisplayImage = (entry: (typeof dogs)[number]) => {
 			<p class="section-banner-sub text-xs font-medium uppercase tracking-widest text-[#2f2e17]/60 transition-all duration-300">{currentLitterPuppies.length} puppies</p>
 		</div>
 		<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
-			<div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+			<div class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 				{currentLitterPuppies.map((dog) => (
 					<article>
 						<button

@@ -1,6 +1,6 @@
 ---
 name: Dakoda
-label: Dakoda (Koda) - Mama
+label: Dakoda (Koda)
 image: /images/dogs/dakoda.jpg
 group: Parents
 role: Mama
