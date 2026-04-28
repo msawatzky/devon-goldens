@@ -7,12 +7,111 @@
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Devon Goldens</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 	</head>
-	<body class="bg-amber-50 text-[#5E5C2D] antialiased">
+	<body class="bg-[#faf9f6] text-neutral-800 antialiased">
+
+		<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+			<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
+				<a href="#hero" class="font-['Playfair_Display'] text-xl font-semibold tracking-tight text-white transition-colors duration-300" id="header-logo">
+					Devon Goldens
+				</a>
+				<nav class="hidden items-center gap-8 md:flex">
+					<a href="#about" class="header-link text-sm font-medium text-white/90 transition hover:text-white">About</a>
+					<a href="#parents" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Parents</a>
+					<a href="#gallery" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Puppies</a>
+					<a href="#faq" class="header-link text-sm font-medium text-white/90 transition hover:text-white">FAQ</a>
+					<a href="#contact" class="rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white ring-1 ring-white/30 transition hover:bg-white/25 header-link">Contact</a>
+				</nav>
+				<button id="mobile-menu-btn" class="flex flex-col gap-1.5 md:hidden" aria-label="Open menu">
+					<span class="h-px w-6 bg-white block"></span>
+					<span class="h-px w-6 bg-white block"></span>
+					<span class="h-px w-4 bg-white block"></span>
+				</button>
+			</div>
+
+			<div id="mobile-menu" class="hidden bg-white shadow-lg md:hidden">
+				<nav class="flex flex-col gap-0 px-6 py-4">
+					<a href="#about" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">About</a>
+					<a href="#parents" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Parents</a>
+					<a href="#gallery" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Puppies</a>
+					<a href="#faq" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">FAQ</a>
+					<a href="#contact" class="mobile-link py-3 text-sm font-medium text-neutral-700">Contact</a>
+				</nav>
+			</div>
+		</header>
+
 		<slot />
+
+		<footer class="border-t border-neutral-200 bg-white py-8">
+			<div class="mx-auto flex flex-col items-center gap-2 px-6 text-center md:px-10">
+				<p class="font-['Playfair_Display'] text-lg font-semibold text-[#5E5C2D]">Devon Goldens</p>
+				<p class="text-sm text-neutral-500">Purebred Canadian Field line golden retrievers, family raised.</p>
+			</div>
+		</footer>
+
 	</body>
 </html>
 
 <style is:global>
 	@import '../styles/global.css';
+
+	html { scroll-behavior: smooth; }
+
+	body {
+		font-family: 'Inter', sans-serif;
+	}
+
+	h1, h2, h3 {
+		font-family: 'Playfair Display', serif;
+	}
+
+	#site-header.scrolled {
+		background: rgba(255, 255, 255, 0.97);
+		backdrop-filter: blur(8px);
+		border-bottom: 1px solid rgba(0,0,0,0.08);
+		box-shadow: 0 1px 16px rgba(0,0,0,0.06);
+	}
+
+	#site-header.scrolled #header-logo {
+		color: #2f2e17;
+	}
+
+	#site-header.scrolled .header-link {
+		color: #5E5C2D;
+	}
+
+	#site-header.scrolled .header-link:last-child {
+		background: #5E5C2D;
+		color: white;
+		ring-color: transparent;
+	}
+
+	#site-header.scrolled #mobile-menu-btn span {
+		background: #2f2e17;
+	}
 </style>
+
+<script>
+	const header = document.getElementById('site-header');
+	const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+	const mobileMenu = document.getElementById('mobile-menu');
+
+	window.addEventListener('scroll', () => {
+		if (window.scrollY > 60) {
+			header?.classList.add('scrolled');
+		} else {
+			header?.classList.remove('scrolled');
+		}
+	});
+
+	mobileMenuBtn?.addEventListener('click', () => {
+		mobileMenu?.classList.toggle('hidden');
+	});
+
+	document.querySelectorAll('.mobile-link').forEach((link) => {
+		link.addEventListener('click', () => mobileMenu?.classList.add('hidden'));
+	});
+</script>
