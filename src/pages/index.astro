@@ -268,15 +268,17 @@ const getDisplayImage = (entry: (typeof dogs)[number]) => {
 </Layout>
 
 <style>
-	.section-banner.is-stuck:not(.no-shrink) {
-		height: 2.75rem;
-	}
-	.section-banner.is-stuck:not(.no-shrink) .section-banner-title {
-		font-size: 1rem;
-		line-height: 1.5;
-	}
-	.section-banner.is-stuck .section-banner-sub {
-		display: none;
+	@media (max-width: 767px) {
+		.section-banner.is-stuck:not(.no-shrink) {
+			height: 2.75rem;
+		}
+		.section-banner.is-stuck:not(.no-shrink) .section-banner-title {
+			font-size: 1rem;
+			line-height: 1.5;
+		}
+		.section-banner.is-stuck .section-banner-sub {
+			display: none;
+		}
 	}
 </style>
 
