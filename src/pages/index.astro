@@ -59,21 +59,21 @@ const galleryData = {
 const galleryTitles: Record<string, string> = {
 	bailey: 'Bailey',
 	dakoda: 'Dakoda (Koda)',
-	'previous-litter': 'Previous Litter',
+	'previous-litter': 'Previous Litters',
 };
 ---
 
 <Layout>
 
 	<!-- HERO -->
-	<section id="hero" class="relative flex min-h-screen items-center justify-center overflow-hidden">
+	<section id="hero" class="hero relative flex min-h-screen items-center justify-center overflow-hidden">
 		<img
 			src="/all-the-puppies.jpg"
 			alt="Golden retrievers"
-			class="absolute inset-0 h-full w-full object-cover object-[center_calc(50%+100px)]"
+			class="hero-media absolute inset-0 h-full w-full object-cover object-center md:object-[center_calc(50%+100px)]"
 			loading="eager"
 		/>
-		<div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/60"></div>
+		<div class="hero-overlay absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/60"></div>
 		<div class="relative z-10 mx-auto max-w-4xl px-6 text-center text-white">
 			<p class="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">Devon Goldens</p>
 			<h1 class="text-5xl font-semibold leading-tight md:text-7xl">
@@ -160,7 +160,7 @@ const galleryTitles: Record<string, string> = {
 	{previousLitterImages.length > 0 && (
 		<section id="gallery" class="bg-[#faf9f6]">
 			<div class="section-banner sticky z-30 flex h-24 items-center justify-center bg-[#FC9C51] transition-all duration-300">
-				<h2 class="section-banner-title text-3xl font-semibold text-[#2f2e17] transition-all duration-300 md:text-4xl">Previous Litter</h2>
+				<h2 class="section-banner-title text-3xl font-semibold text-[#2f2e17] transition-all duration-300 md:text-4xl">Previous Litters</h2>
 			</div>
 			<div class="mx-auto max-w-7xl px-4 py-16 md:px-6">
 				<div class="mosaic-grid grid grid-cols-2 gap-1 md:grid-cols-4 md:auto-rows-[180px] md:gap-1.5">
@@ -173,7 +173,7 @@ const galleryTitles: Record<string, string> = {
 						>
 							<img
 								src={src}
-								alt={`Previous litter photo ${index + 1}`}
+								alt={`Previous litters photo ${index + 1}`}
 								class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110 group-hover:brightness-110"
 								loading="lazy"
 							/>
@@ -330,6 +330,22 @@ const galleryTitles: Record<string, string> = {
 		min-height: 140px;
 	}
 
+	@media (max-width: 767px) {
+		#hero {
+			min-height: 100svh;
+			min-height: 100dvh;
+			margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+			padding-top: env(safe-area-inset-top, 0px);
+		}
+
+		#hero .hero-media,
+		#hero .hero-overlay {
+			top: calc(-1 * env(safe-area-inset-top, 0px));
+			height: calc(100% + env(safe-area-inset-top, 0px));
+			min-height: calc(100svh + env(safe-area-inset-top, 0px));
+		}
+	}
+
 	#gallery-lightbox.lightbox {
 		margin: 0;
 		padding: 0;
@@ -433,12 +449,25 @@ const galleryTitles: Record<string, string> = {
 		.section-banner.is-stuck:not(.no-shrink) {
 			height: 2.75rem;
 		}
+
 		.section-banner.is-stuck:not(.no-shrink) .section-banner-title {
 			font-size: 1rem;
 			line-height: 1.5;
 		}
+
 		.section-banner.is-stuck .section-banner-sub {
 			display: none;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.section-banner.is-stuck:not(.no-shrink) {
+			height: 3.5rem;
+		}
+
+		.section-banner.is-stuck:not(.no-shrink) .section-banner-title {
+			font-size: 1.25rem;
+			line-height: 1.75;
 		}
 	}
 </style>
@@ -514,11 +543,19 @@ const galleryTitles: Record<string, string> = {
 
 	// Sticky section banners
 	const nav = document.getElementById('site-header');
-	const navHeight = nav?.offsetHeight ?? 64;
-	const rootMargin = `-${navHeight + 1}px 0px 0px 0px`;
+
+	const updateBannerTop = () => {
+		const navHeight = nav?.offsetHeight ?? 64;
+		document.querySelectorAll('.section-banner').forEach((banner) => {
+			(banner as HTMLElement).style.top = `${navHeight}px`;
+		});
+	};
+
+	updateBannerTop();
 
 	document.querySelectorAll('.section-banner').forEach((banner) => {
-		(banner as HTMLElement).style.top = `${navHeight}px`;
+		const navHeight = nav?.offsetHeight ?? 64;
+		const rootMargin = `-${navHeight + 1}px 0px 0px 0px`;
 
 		const sentinel = document.createElement('div');
 		sentinel.style.cssText = 'height:0;margin:0;padding:0;border:0;';
@@ -532,4 +569,8 @@ const galleryTitles: Record<string, string> = {
 		);
 		observer.observe(sentinel);
 	});
+
+	if (nav) {
+		new ResizeObserver(updateBannerTop).observe(nav);
+	}
 </script>
