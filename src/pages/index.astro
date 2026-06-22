@@ -18,6 +18,7 @@ const parents = [
 		label: 'Bailey',
 		role: 'Mama',
 		cover: publicImageUrl('bailey', 'PHOTO-2026-04-28-17-19-01 3.jpg'),
+		coverPosition: 'center 35%',
 		images: baileyImages,
 	},
 	{
@@ -128,6 +129,7 @@ const galleryTitles: Record<string, string> = {
 										src={parent.cover}
 										alt={parent.label}
 										class="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+										style={parent.coverPosition ? `object-position: ${parent.coverPosition}` : undefined}
 										loading="lazy"
 									/>
 								</div>
