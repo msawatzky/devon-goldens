@@ -100,8 +100,8 @@ const galleryTitles: Record<string, string> = {
 
 	<!-- ABOUT -->
 	<section id="about">
-		<div class="section-banner sticky z-30 flex h-24 items-center justify-center bg-[#5E5C2D] transition-all duration-300">
-			<h2 class="section-banner-title text-3xl font-semibold text-white transition-all duration-300 md:text-4xl">About Us</h2>
+		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#5E5C2D]">
+			<h2 class="section-banner-title text-lg font-semibold text-white md:text-xl">About Us</h2>
 		</div>
 		<div class="mx-auto max-w-3xl px-6 py-16 md:px-10">
 			<p class="whitespace-pre-line text-lg leading-[1.9] text-neutral-700">{homepage?.aboutUs}</p>
@@ -110,8 +110,8 @@ const galleryTitles: Record<string, string> = {
 
 	<!-- PARENTS -->
 	<section id="parents" class="bg-white">
-		<div class="section-banner sticky z-30 flex h-24 items-center justify-center bg-[#999A57] transition-all duration-300">
-			<h2 class="section-banner-title text-3xl font-semibold text-white transition-all duration-300 md:text-4xl">Meet the Parents</h2>
+		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#999A57]">
+			<h2 class="section-banner-title text-lg font-semibold text-white md:text-xl">Meet the Parents</h2>
 		</div>
 		<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
 			<div class="grid grid-cols-2 gap-6 md:grid-cols-3 md:gap-8">
@@ -159,8 +159,8 @@ const galleryTitles: Record<string, string> = {
 	<!-- PREVIOUS LITTER MOSAIC -->
 	{previousLitterImages.length > 0 && (
 		<section id="gallery" class="bg-[#faf9f6]">
-			<div class="section-banner sticky z-30 flex h-24 items-center justify-center bg-[#FC9C51] transition-all duration-300">
-				<h2 class="section-banner-title text-3xl font-semibold text-[#2f2e17] transition-all duration-300 md:text-4xl">Previous Litters</h2>
+			<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#FC9C51]">
+				<h2 class="section-banner-title text-lg font-semibold text-[#2f2e17] md:text-xl">Previous Litters</h2>
 			</div>
 			<div class="mx-auto max-w-7xl px-4 py-16 md:px-6">
 				<div class="mosaic-grid grid grid-cols-2 gap-1 md:grid-cols-4 md:auto-rows-[180px] md:gap-1.5">
@@ -192,8 +192,8 @@ const galleryTitles: Record<string, string> = {
 
 	<!-- CURRENT LITTER -->
 	<section id="current-litter" class="bg-white">
-		<div class="section-banner sticky z-30 flex h-24 items-center justify-center bg-[#FEC67C] transition-all duration-300">
-			<h2 class="section-banner-title text-3xl font-semibold text-[#2f2e17] transition-all duration-300 md:text-4xl">This Litter</h2>
+		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#FEC67C]">
+			<h2 class="section-banner-title text-lg font-semibold text-[#2f2e17] md:text-xl">This Litter</h2>
 		</div>
 		<div class="mx-auto max-w-2xl px-6 py-20 text-center md:px-10">
 			<p class="font-['Playfair_Display'] text-2xl font-semibold text-[#2f2e17] md:text-3xl">
@@ -213,8 +213,8 @@ const galleryTitles: Record<string, string> = {
 
 	<!-- FAQ -->
 	<section id="faq" class="bg-[#faf9f6]">
-		<div class="section-banner sticky z-30 flex h-24 items-center justify-center bg-[#F9BDB0] transition-all duration-300">
-			<h2 class="section-banner-title text-3xl font-semibold text-[#2f2e17] transition-all duration-300 md:text-4xl">FAQ</h2>
+		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#F9BDB0]">
+			<h2 class="section-banner-title text-lg font-semibold text-[#2f2e17] md:text-xl">FAQ</h2>
 		</div>
 		<div class="mx-auto max-w-3xl px-6 py-16 md:px-10">
 			<div class="divide-y divide-neutral-200">
@@ -242,8 +242,8 @@ const galleryTitles: Record<string, string> = {
 
 	<!-- CONTACT -->
 	<section id="contact" class="bg-[#A16A84]">
-		<div class="section-banner no-shrink sticky z-30 flex h-24 items-center justify-center bg-[#A16A84] transition-all duration-300">
-			<h2 class="section-banner-title text-3xl font-semibold text-white transition-all duration-300 md:text-4xl">Contact Us</h2>
+		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#A16A84]">
+			<h2 class="section-banner-title text-lg font-semibold text-white md:text-xl">Contact Us</h2>
 		</div>
 		<div class="mx-auto max-w-3xl px-6 py-16 text-center md:px-10">
 			<p class="text-white/70">We'd love to hear from you. Reach out through any of the channels below.</p>
@@ -444,32 +444,6 @@ const galleryTitles: Record<string, string> = {
 	#lightbox-next {
 		right: 1rem;
 	}
-
-	@media (max-width: 767px) {
-		.section-banner.is-stuck:not(.no-shrink) {
-			height: 2.75rem;
-		}
-
-		.section-banner.is-stuck:not(.no-shrink) .section-banner-title {
-			font-size: 1rem;
-			line-height: 1.5;
-		}
-
-		.section-banner.is-stuck .section-banner-sub {
-			display: none;
-		}
-	}
-
-	@media (min-width: 768px) {
-		.section-banner.is-stuck:not(.no-shrink) {
-			height: 3.5rem;
-		}
-
-		.section-banner.is-stuck:not(.no-shrink) .section-banner-title {
-			font-size: 1.25rem;
-			line-height: 1.75;
-		}
-	}
 </style>
 
 <script>
@@ -552,23 +526,6 @@ const galleryTitles: Record<string, string> = {
 	};
 
 	updateBannerTop();
-
-	document.querySelectorAll('.section-banner').forEach((banner) => {
-		const navHeight = nav?.offsetHeight ?? 64;
-		const rootMargin = `-${navHeight + 1}px 0px 0px 0px`;
-
-		const sentinel = document.createElement('div');
-		sentinel.style.cssText = 'height:0;margin:0;padding:0;border:0;';
-		banner.parentElement?.insertBefore(sentinel, banner);
-
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				banner.classList.toggle('is-stuck', !entry.isIntersecting);
-			},
-			{ rootMargin, threshold: 0 }
-		);
-		observer.observe(sentinel);
-	});
 
 	if (nav) {
 		new ResizeObserver(updateBannerTop).observe(nav);
