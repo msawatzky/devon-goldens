@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+
+interface Props {
+	class?: string;
+	alt?: string;
+	width?: number;
+}
+
+const { class: className = 'h-10 w-10', alt = '', width = 80 } = Astro.props;
+---
+
+<Image
+	src={logo}
+	alt={alt}
+	width={width}
+	height={width}
+	class:list={['shrink-0', className]}
+	densities={[1, 2]}
+/>
