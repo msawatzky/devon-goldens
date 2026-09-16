@@ -10,6 +10,7 @@ const orderedFaqs = [...faqs].sort((a, b) => a.data.order - b.data.order);
 
 const baileyImages = getImagesFromPublicFolder('bailey');
 const dakodaImages = getImagesFromPublicFolder('dakoda');
+const blazeImages = getImagesFromPublicFolder('blaze');
 const previousLitterImages = getImagesFromPublicFolder('previous litter');
 
 const parents = [
@@ -25,13 +26,20 @@ const parents = [
 		id: 'dakoda',
 		label: 'Dakoda (Koda)',
 		role: 'Mama',
-		cover: publicImageUrl('dakoda', 'PHOTO-2026-04-28-17-16-48.jpg'),
+		cover: publicImageUrl('dakoda', 'koda-2026.jpg'),
 		images: dakodaImages,
+	},
+	{
+		id: 'blaze',
+		label: 'Blaze',
+		role: 'Stud (Koda)',
+		cover: publicImageUrl('blaze', 'blaze.jpg'),
+		images: blazeImages,
 	},
 	{
 		id: 'miggy',
 		label: 'Mr. Miagi (Miggy)',
-		role: 'Stud',
+		role: 'Stud (Bailey)',
 		cover: null,
 		images: [] as string[],
 	},
@@ -53,12 +61,14 @@ const mosaicSpans = [
 const galleryData = {
 	bailey: baileyImages,
 	dakoda: dakodaImages,
+	blaze: blazeImages,
 	'previous-litter': previousLitterImages,
 };
 
 const galleryTitles: Record<string, string> = {
 	bailey: 'Bailey',
 	dakoda: 'Dakoda (Koda)',
+	blaze: 'Blaze',
 	'previous-litter': 'Previous Litters',
 };
 ---
@@ -114,7 +124,7 @@ const galleryTitles: Record<string, string> = {
 			<h2 class="section-banner-title text-lg font-semibold text-white md:text-xl">Meet the Parents</h2>
 		</div>
 		<div class="mx-auto max-w-7xl px-6 py-16 md:px-10">
-			<div class="grid grid-cols-2 gap-6 md:grid-cols-3 md:gap-8">
+			<div class="grid grid-cols-2 gap-6 md:grid-cols-2 lg:grid-cols-4 md:gap-8">
 				{parents.map((parent) => (
 					<article>
 						{parent.cover ? (
@@ -195,19 +205,41 @@ const galleryTitles: Record<string, string> = {
 		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#FEC67C]">
 			<h2 class="section-banner-title text-lg font-semibold text-[#2f2e17] md:text-xl">This Litter</h2>
 		</div>
-		<div class="mx-auto max-w-2xl px-6 py-20 text-center md:px-10">
-			<p class="font-['Playfair_Display'] text-2xl font-semibold text-[#2f2e17] md:text-3xl">
-				All puppies from this litter have found their forever homes.
-			</p>
-			<p class="mt-5 text-base leading-relaxed text-neutral-600 md:text-lg">
-				Thank you to every family who welcomed one of our pups. If you would like to be considered for a future litter, we would love to hear from you.
-			</p>
-			<a
-				href="/reserve"
-				class="mt-8 inline-block rounded-full bg-[#5E5C2D] px-8 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-			>
-				Reserve / Join Waitlist
-			</a>
+		<div class="mx-auto max-w-3xl px-6 py-16 md:px-10">
+			<div class="text-center">
+				<p class="font-['Playfair_Display'] text-2xl font-semibold text-[#2f2e17] md:text-3xl">
+					Upcoming litter: Dakoda (Koda) &amp; Blaze
+				</p>
+				<p class="mt-5 text-base leading-relaxed text-neutral-600 md:text-lg">
+					We have an upcoming litter on the way from Koda and Blaze. If you would like to be considered for a puppy from this litter, we would love to hear from you.
+				</p>
+				<a
+					href="/reserve"
+					class="mt-8 inline-block rounded-full bg-[#5E5C2D] px-8 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+				>
+					Reserve / Join Waitlist
+				</a>
+			</div>
+			<div class="mt-12 grid grid-cols-2 gap-4 md:gap-6">
+				<figure>
+					<img
+						src={publicImageUrl('dakoda', 'koda-2026.jpg')}
+						alt="Dakoda (Koda)"
+						class="aspect-[4/3] w-full rounded-lg object-cover"
+						loading="lazy"
+					/>
+					<figcaption class="mt-2 text-center text-sm font-medium text-neutral-700">Dakoda (Koda)</figcaption>
+				</figure>
+				<figure>
+					<img
+						src={publicImageUrl('blaze', 'blaze.jpg')}
+						alt="Blaze"
+						class="aspect-[4/3] w-full rounded-lg object-cover"
+						loading="lazy"
+					/>
+					<figcaption class="mt-2 text-center text-sm font-medium text-neutral-700">Blaze</figcaption>
+				</figure>
+			</div>
 		</div>
 	</section>
 
