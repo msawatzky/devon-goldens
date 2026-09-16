@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CognitoFormEmbed from '../components/CognitoFormEmbed.astro';
+import contact from '../content/singletons/contact.json';
+import reserve from '../content/singletons/reserve.json';
+import {
+	getCognitoDepositFormHeight,
+	getCognitoDepositFormSrc,
+	getCognitoEmbedMode,
+	isCognitoDepositFormConfigured,
+	parseCognitoFormSrc,
+} from '../lib/cognito';
+
+const formSrc = getCognitoDepositFormSrc();
+const formHeight = getCognitoDepositFormHeight();
+const embedMode = getCognitoEmbedMode();
+const formParts = formSrc ? parseCognitoFormSrc(formSrc) : undefined;
+const formReady = isCognitoDepositFormConfigured();
+
+const email = contact?.email ?? 'hello@devongoldens.com';
+const instagram = contact?.instagram ?? '@devongoldens';
+const phone = contact?.phone ?? '';
+---
+
+<Layout title={reserve.pageTitle}>
+	<section class="border-b border-neutral-200 bg-[#5E5C2D] pt-24 pb-14 text-white md:pt-28">
+		<div class="mx-auto max-w-3xl px-6 text-center md:px-10">
+			<p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">Devon Goldens</p>
+			<h1 class="font-['Playfair_Display'] text-4xl font-semibold md:text-5xl">{reserve.headline}</h1>
+			<p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/85">{reserve.intro}</p>
+		</div>
+	</section>
+
+	<section class="mx-auto max-w-3xl px-6 py-14 md:px-10">
+		{formReady && formSrc ? (
+			<>
+				<ol class="mb-12 space-y-4 border-b border-neutral-200/80 pb-12">
+					{reserve.steps.map((step, index) => (
+						<li class="flex gap-3 text-sm leading-relaxed text-neutral-700 md:text-base">
+							<span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEC67C] text-xs font-bold text-[#2f2e17]">
+								{index + 1}
+							</span>
+							<span class="pt-0.5">{step}</span>
+						</li>
+					))}
+				</ol>
+				<CognitoFormEmbed
+					id="devon-goldens-deposit-form"
+					title={reserve.pageTitle}
+					mode={embedMode}
+					src={formSrc}
+					formKey={formParts?.formKey}
+					formId={formParts?.formId}
+					height={formHeight}
+				/>
+			</>
+		) : (
+			<div class="rounded-2xl bg-white p-8 text-center shadow-sm ring-1 ring-neutral-200/80 md:p-10">
+				<p class="text-base leading-relaxed text-neutral-700">{reserve.unavailableMessage}</p>
+				<div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+					<a
+						href={`mailto:${email}`}
+						class="rounded-full bg-[#5E5C2D] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+					>
+						Email us
+					</a>
+					<a
+						href="/#contact"
+						class="rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-[#5E5C2D] transition hover:bg-neutral-50"
+					>
+						All contact options
+					</a>
+				</div>
+				{import.meta.env.DEV && (
+					<p class="mt-8 text-left text-sm leading-relaxed text-neutral-500">
+						<strong class="font-medium text-neutral-700">Dev:</strong> set{' '}
+						<code class="rounded bg-neutral-100 px-1.5 py-0.5 text-xs">PUBLIC_COGNITO_DEPOSIT_FORM_SRC</code> in{' '}
+						<code class="rounded bg-neutral-100 px-1.5 py-0.5 text-xs">.env</code> (see{' '}
+						<code class="rounded bg-neutral-100 px-1.5 py-0.5 text-xs">.env.example</code>).
+					</p>
+				)}
+			</div>
+		)}
+	</section>
+
+	{formReady && (
+		<section class="border-t border-neutral-200 bg-[#faf9f6] py-10">
+			<div class="mx-auto max-w-3xl px-6 text-center text-sm text-neutral-600 md:px-10">
+				<p>
+					Questions before you submit?
+					<a href={`mailto:${email}`} class="font-medium text-[#5E5C2D] underline-offset-2 hover:underline">{email}</a>
+					{phone ? (
+						<>
+							{' '}
+							or{' '}
+							<a href={`tel:${phone.replace(/\D/g, '')}`} class="font-medium text-[#5E5C2D] underline-offset-2 hover:underline">
+								{phone}
+							</a>
+						</>
+					) : null}
+					.
+				</p>
+				<p class="mt-2">
+					<a href={`https://instagram.com/${instagram.replace('@', '')}`} class="font-medium text-[#5E5C2D] underline-offset-2 hover:underline" target="_blank" rel="noreferrer">
+						{instagram}
+					</a>
+				</p>
+			</div>
+		</section>
+	)}
+</Layout>

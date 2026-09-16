@@ -1,3 +1,12 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title = 'Devon Goldens' } = Astro.props;
+const pageTitle = title === 'Devon Goldens' ? title : `${title} | Devon Goldens`;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -6,24 +15,25 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Devon Goldens</title>
+		<title>{pageTitle}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 	</head>
-	<body class="bg-[#faf9f6] text-neutral-800 antialiased">
+	<body class="bg-[#faf9f6] text-neutral-800 antialiased" data-solid-header={Astro.url.pathname !== '/' ? 'true' : undefined}>
 
 		<header id="site-header" class="fixed inset-x-0 top-0 z-50 bg-transparent transition-colors duration-300">
 			<div id="header-inner" class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
-				<a href="#hero" class="font-['Playfair_Display'] text-xl font-semibold tracking-tight text-white transition-colors duration-300" id="header-logo">
+				<a href="/#hero" class="font-['Playfair_Display'] text-xl font-semibold tracking-tight text-white transition-colors duration-300" id="header-logo">
 					Devon Goldens
 				</a>
 				<nav id="header-nav" class="hidden items-center gap-8 md:flex">
-					<a href="#about" class="header-link text-sm font-medium text-white/90 transition hover:text-white">About</a>
-					<a href="#parents" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Parents</a>
-					<a href="#gallery" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Puppies</a>
-					<a href="#faq" class="header-link text-sm font-medium text-white/90 transition hover:text-white">FAQ</a>
-					<a href="#contact" class="rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white ring-1 ring-white/30 transition hover:bg-white/25 header-link">Contact</a>
+					<a href="/#about" class="header-link text-sm font-medium text-white/90 transition hover:text-white">About</a>
+					<a href="/#parents" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Parents</a>
+					<a href="/#gallery" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Puppies</a>
+					<a href="/#faq" class="header-link text-sm font-medium text-white/90 transition hover:text-white">FAQ</a>
+					<a href="/reserve" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Reserve</a>
+					<a href="/#contact" class="rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white ring-1 ring-white/30 transition hover:bg-white/25 header-link">Contact</a>
 				</nav>
 				<button id="mobile-menu-btn" class="flex flex-col gap-1.5 md:hidden" aria-label="Open menu">
 					<span class="h-px w-6 bg-white block"></span>
@@ -34,11 +44,12 @@
 
 			<div id="mobile-menu" class="hidden bg-white shadow-lg md:hidden">
 				<nav class="flex flex-col gap-0 px-6 py-4">
-					<a href="#about" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">About</a>
-					<a href="#parents" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Parents</a>
-					<a href="#gallery" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Puppies</a>
-					<a href="#faq" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">FAQ</a>
-					<a href="#contact" class="mobile-link py-3 text-sm font-medium text-neutral-700">Contact</a>
+					<a href="/#about" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">About</a>
+					<a href="/#parents" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Parents</a>
+					<a href="/#gallery" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Puppies</a>
+					<a href="/#faq" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">FAQ</a>
+					<a href="/reserve" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Reserve</a>
+					<a href="/#contact" class="mobile-link py-3 text-sm font-medium text-neutral-700">Contact</a>
 				</nav>
 			</div>
 		</header>
@@ -103,13 +114,18 @@
 	const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 	const mobileMenu = document.getElementById('mobile-menu');
 
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 60) {
+	const useSolidHeader = document.body.dataset.solidHeader === 'true';
+
+	const updateHeaderScroll = () => {
+		if (useSolidHeader || window.scrollY > 60) {
 			header?.classList.add('scrolled');
 		} else {
 			header?.classList.remove('scrolled');
 		}
-	});
+	};
+
+	updateHeaderScroll();
+	window.addEventListener('scroll', updateHeaderScroll);
 
 	mobileMenuBtn?.addEventListener('click', () => {
 		mobileMenu?.classList.toggle('hidden');

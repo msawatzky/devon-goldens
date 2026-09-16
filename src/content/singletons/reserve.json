@@ -1,0 +1,11 @@
+{
+  "pageTitle": "Reserve a Puppy",
+  "headline": "Agreement & deposit",
+  "intro": "When reservations are open, complete the form below to sign the puppy agreement and pay your deposit. Families pick their puppy in order of deposit date (see FAQ).",
+  "steps": [
+    "Fill in your contact details",
+    "Read and sign the purchase agreement",
+    "Pay your deposit securely by card"
+  ],
+  "unavailableMessage": "Online agreement and deposit are not set up on the site yet. Reach out by email, phone, or Instagram and we will walk you through the next steps."
+}

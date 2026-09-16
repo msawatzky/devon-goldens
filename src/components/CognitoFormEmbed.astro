@@ -1,0 +1,114 @@
+---
+import type { CognitoEmbedMode } from '../lib/cognito';
+
+interface Props {
+	id: string;
+	title: string;
+	mode: CognitoEmbedMode;
+	src?: string;
+	formKey?: string;
+	formId?: string;
+	height?: number;
+}
+
+const { id, title, mode, src, formKey, formId, height = 854 } = Astro.props;
+
+const iframeCss =
+	'body{background:transparent!important;font-family:Inter,sans-serif!important}' +
+	'#cognito{background:transparent!important}' +
+	'#cognito .cog-button--primary{background-color:#5E5C2D!important;border-color:#5E5C2D!important}' +
+	'#cognito .cog-button--primary:hover{filter:brightness(0.95)}' +
+	'#cognito .cog-page{background:transparent!important}';
+---
+
+{mode === 'seamless' && formKey && formId ? (
+	<div id={id} class="cognito-form-host" aria-label={title}>
+		<script
+			is:inline
+			src="https://www.cognitoforms.com/f/seamless.js"
+			data-key={formKey}
+			data-form={formId}
+		></script>
+	</div>
+) : src ? (
+	<div class="cognito-form-host cognito-form-host--iframe">
+		<iframe
+			id={id}
+			src={src}
+			title={title}
+			class="cognito-form-iframe"
+			style={`border:0;width:100%;min-height:${height}px;`}
+			height={height}
+			allow="payment"
+			loading="lazy"
+		/>
+	</div>
+	<script is:inline src="https://www.cognitoforms.com/f/iframe.js"></script>
+	<script
+		is:inline
+		define:vars={{ iframeId: id, iframeCss }}
+	>
+		(function () {
+			function apply() {
+				if (!window.Cognito) return;
+				window.Cognito('#' + iframeId).setCss(iframeCss);
+			}
+			apply();
+			document.addEventListener('DOMContentLoaded', apply);
+			window.addEventListener('load', apply);
+		})();
+	</script>
+) : null}
+
+<style is:global>
+	.cognito-form-host {
+		width: 100%;
+		max-width: 40rem;
+		margin-inline: auto;
+	}
+
+	.cognito-form-host--iframe .cognito-form-iframe {
+		display: block;
+		border: 0;
+		background: transparent;
+	}
+
+	/* Seamless embed — match Devon Goldens page chrome */
+	.cognito-form-host .cog-body,
+	.cognito-form-host .cog-page,
+	.cognito-form-host .cog-form {
+		background: transparent !important;
+	}
+
+	.cognito-form-host .cog-button--primary {
+		background-color: #5e5c2d !important;
+		border-color: #5e5c2d !important;
+		border-radius: 9999px !important;
+		font-weight: 600 !important;
+		padding-inline: 1.75rem !important;
+	}
+
+	.cognito-form-host .cog-button--primary:hover {
+		filter: brightness(0.95);
+	}
+
+	.cognito-form-host .cog-field__label,
+	.cognito-form-host .cog-heading,
+	.cognito-form-host legend {
+		color: #292524 !important;
+	}
+
+	.cognito-form-host input:not([type='checkbox']):not([type='radio']),
+	.cognito-form-host textarea,
+	.cognito-form-host select {
+		border-radius: 0.75rem !important;
+		border-color: #d6d3d1 !important;
+	}
+
+	.cognito-form-host input:focus,
+	.cognito-form-host textarea:focus,
+	.cognito-form-host select:focus {
+		border-color: #5e5c2d !important;
+		box-shadow: 0 0 0 2px rgb(94 92 45 / 0.15) !important;
+	}
+</style>
