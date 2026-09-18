@@ -3,9 +3,10 @@ import Logo from '../components/Logo.astro';
 
 interface Props {
 	title?: string;
+	noIndex?: boolean;
 }
 
-const { title = 'Devon Goldens' } = Astro.props;
+const { title = 'Devon Goldens', noIndex = false } = Astro.props;
 const pageTitle = title === 'Devon Goldens' ? title : `${title} | Devon Goldens`;
 ---
 
@@ -19,6 +20,7 @@ const pageTitle = title === 'Devon Goldens' ? title : `${title} | Devon Goldens`
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+		{noIndex && <meta name="robots" content="noindex, nofollow" />}
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -36,7 +38,6 @@ const pageTitle = title === 'Devon Goldens' ? title : `${title} | Devon Goldens`
 					<a href="/#parents" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Parents</a>
 					<a href="/#gallery" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Puppies</a>
 					<a href="/#faq" class="header-link text-sm font-medium text-white/90 transition hover:text-white">FAQ</a>
-					<a href="/reserve" class="header-link text-sm font-medium text-white/90 transition hover:text-white">Reserve</a>
 					<a href="/#contact" class="rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white ring-1 ring-white/30 transition hover:bg-white/25 header-link">Contact</a>
 				</nav>
 				<button id="mobile-menu-btn" class="flex flex-col gap-1.5 md:hidden" aria-label="Open menu">
@@ -52,7 +53,6 @@ const pageTitle = title === 'Devon Goldens' ? title : `${title} | Devon Goldens`
 					<a href="/#parents" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Parents</a>
 					<a href="/#gallery" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Puppies</a>
 					<a href="/#faq" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">FAQ</a>
-					<a href="/reserve" class="mobile-link border-b border-neutral-100 py-3 text-sm font-medium text-neutral-700">Reserve</a>
 					<a href="/#contact" class="mobile-link py-3 text-sm font-medium text-neutral-700">Contact</a>
 				</nav>
 			</div>
