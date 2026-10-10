@@ -18,8 +18,8 @@ const parents = [
 		id: 'bailey',
 		label: 'Bailey',
 		role: 'Mama',
-		cover: publicImageUrl('bailey', 'PHOTO-2026-04-28-17-19-01 3.jpg'),
-		coverPosition: 'center 35%',
+		cover: publicImageUrl('bailey', 'bailey.jpg'),
+		coverPosition: 'center 30%',
 		images: baileyImages,
 	},
 	{
@@ -44,6 +44,8 @@ const parents = [
 		images: [] as string[],
 	},
 ];
+
+const previousLitterPreview = 4;
 
 const mosaicSpans = [
 	'md:col-span-2 md:row-span-2',
@@ -166,40 +168,6 @@ const galleryTitles: Record<string, string> = {
 		</div>
 	</section>
 
-	<!-- PREVIOUS LITTER MOSAIC -->
-	{previousLitterImages.length > 0 && (
-		<section id="gallery" class="bg-[#faf9f6]">
-			<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#FC9C51]">
-				<h2 class="section-banner-title text-lg font-semibold text-[#2f2e17] md:text-xl">Previous Litters</h2>
-			</div>
-			<div class="mx-auto max-w-7xl px-4 py-16 md:px-6">
-				<div class="mosaic-grid grid grid-cols-2 gap-1 md:grid-cols-4 md:auto-rows-[180px] md:gap-1.5">
-					{previousLitterImages.map((src, index) => (
-						<button
-							type="button"
-							class={`gallery-open mosaic-item group relative overflow-hidden ${mosaicSpans[index % mosaicSpans.length]}`}
-							data-gallery="previous-litter"
-							data-index={index}
-						>
-							<img
-								src={src}
-								alt={`Previous litters photo ${index + 1}`}
-								class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110 group-hover:brightness-110"
-								loading="lazy"
-							/>
-							<div class="pointer-events-none absolute inset-0 bg-[#5E5C2D]/0 transition duration-300 group-hover:bg-[#5E5C2D]/20" />
-							<div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
-								<span class="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#5E5C2D]">
-									View
-								</span>
-							</div>
-						</button>
-					))}
-				</div>
-			</div>
-		</section>
-	)}
-
 	<!-- CURRENT LITTER -->
 	<section id="current-litter" class="bg-white">
 		<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#FEC67C]">
@@ -242,6 +210,57 @@ const galleryTitles: Record<string, string> = {
 			</div>
 		</div>
 	</section>
+
+	<!-- PREVIOUS LITTER MOSAIC -->
+	{previousLitterImages.length > 0 && (
+		<section id="gallery" class:list={['bg-[#faf9f6]', { 'is-collapsed': previousLitterImages.length > previousLitterPreview }]}>
+			<div class="section-banner sticky z-30 flex h-16 items-center justify-center bg-[#FC9C51]">
+				<h2 class="section-banner-title text-lg font-semibold text-[#2f2e17] md:text-xl">Previous Litters</h2>
+			</div>
+			<div class="mx-auto max-w-7xl px-4 py-16 md:px-6">
+				<div class="mosaic-grid grid grid-cols-2 gap-1 md:grid-cols-4 md:auto-rows-[180px] md:gap-1.5">
+					{previousLitterImages.map((src, index) => (
+						<button
+							type="button"
+							class:list={[
+								'gallery-open mosaic-item group relative overflow-hidden',
+								mosaicSpans[index % mosaicSpans.length],
+								index >= previousLitterPreview && 'litter-extra',
+							]}
+							data-gallery="previous-litter"
+							data-index={index}
+						>
+							<img
+								src={src}
+								alt={`Previous litters photo ${index + 1}`}
+								class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110 group-hover:brightness-110"
+								loading="lazy"
+							/>
+							<div class="pointer-events-none absolute inset-0 bg-[#5E5C2D]/0 transition duration-300 group-hover:bg-[#5E5C2D]/20" />
+							<div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
+								<span class="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#5E5C2D]">
+									View
+								</span>
+							</div>
+						</button>
+					))}
+				</div>
+				{previousLitterImages.length > previousLitterPreview && (
+					<div class="mt-8 text-center">
+						<button
+							type="button"
+							id="gallery-toggle"
+							class="rounded-full border border-[#5E5C2D] px-8 py-3 text-sm font-semibold text-[#5E5C2D] transition hover:bg-[#5E5C2D] hover:text-white"
+							aria-expanded="false"
+							aria-controls="gallery"
+						>
+							View more
+						</button>
+					</div>
+				)}
+			</div>
+		</section>
+	)}
 
 	<!-- FAQ -->
 	<section id="faq" class="bg-[#faf9f6]">
@@ -360,6 +379,10 @@ const galleryTitles: Record<string, string> = {
 <style>
 	.mosaic-item {
 		min-height: 140px;
+	}
+
+	#gallery.is-collapsed .litter-extra {
+		display: none;
 	}
 
 	@media (max-width: 767px) {
@@ -523,6 +546,19 @@ const galleryTitles: Record<string, string> = {
 		activeIndex = (activeIndex + direction + activeGallery.length) % activeGallery.length;
 		showImage();
 	};
+
+	const gallerySection = document.getElementById('gallery');
+	const galleryToggle = document.getElementById('gallery-toggle');
+
+	galleryToggle?.addEventListener('click', () => {
+		if (!gallerySection || !(galleryToggle instanceof HTMLButtonElement)) return;
+		const collapsed = gallerySection.classList.toggle('is-collapsed');
+		galleryToggle.textContent = collapsed ? 'View more' : 'Show less';
+		galleryToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+		if (collapsed) {
+			gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+	});
 
 	document.querySelectorAll('.gallery-open').forEach((opener) => {
 		opener.addEventListener('click', () => {
