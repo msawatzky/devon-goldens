@@ -11,6 +11,7 @@ const orderedFaqs = [...faqs].sort((a, b) => a.data.order - b.data.order);
 const baileyImages = getImagesFromPublicFolder('bailey');
 const dakodaImages = getImagesFromPublicFolder('dakoda');
 const blazeImages = getImagesFromPublicFolder('blaze');
+const miggyImages = getImagesFromPublicFolder('miggy');
 const previousLitterImages = getImagesFromPublicFolder('previous litter');
 
 const parents = [
@@ -40,8 +41,8 @@ const parents = [
 		id: 'miggy',
 		label: 'Mr. Miagi (Miggy)',
 		role: 'Stud (Bailey)',
-		cover: null,
-		images: [] as string[],
+		cover: publicImageUrl('miggy', 'miggy.jpg'),
+		images: miggyImages,
 	},
 ];
 
@@ -64,6 +65,7 @@ const galleryData = {
 	bailey: baileyImages,
 	dakoda: dakodaImages,
 	blaze: blazeImages,
+	miggy: miggyImages,
 	'previous-litter': previousLitterImages,
 };
 
@@ -71,6 +73,7 @@ const galleryTitles: Record<string, string> = {
 	bailey: 'Bailey',
 	dakoda: 'Dakoda (Koda)',
 	blaze: 'Blaze',
+	miggy: 'Mr. Miagi (Miggy)',
 	'previous-litter': 'Previous Litters',
 };
 ---
@@ -176,10 +179,10 @@ const galleryTitles: Record<string, string> = {
 		<div class="mx-auto max-w-3xl px-6 py-16 md:px-10">
 			<div class="text-center">
 				<p class="font-['Playfair_Display'] text-2xl font-semibold text-[#2f2e17] md:text-3xl">
-					Upcoming litter: Dakoda (Koda) &amp; Blaze
+					Dakoda (Koda) &amp; Blaze
 				</p>
 				<p class="mt-5 text-base leading-relaxed text-neutral-600 md:text-lg">
-					We have an upcoming litter on the way from Koda and Blaze. If you would like to be considered for a puppy from this litter, we would love to hear from you.
+					Born October 15th, 2026 and ready to go home on December 10th, 2026. Contact us for availability.
 				</p>
 				<a
 					href="#contact"
