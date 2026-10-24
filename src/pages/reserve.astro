@@ -23,6 +23,47 @@ const phone = contact?.phone ?? '';
 ---
 
 <Layout title={reserve.pageTitle} noIndex>
+	<script is:inline>
+		try {
+			if (sessionStorage.getItem('devon-goldens-reserve-unlock') === '1') {
+				document.documentElement.dataset.reserveUnlocked = 'true';
+			}
+		} catch {
+			/* sessionStorage can be unavailable; the form still works for this visit */
+		}
+	</script>
+
+	<section id="reserve-gate" class="flex min-h-[calc(100vh-4rem)] items-center px-6 py-24">
+		<div class="mx-auto w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-neutral-200/80 md:p-10">
+			<p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#5E5C2D]/70">Devon Goldens</p>
+			<h1 class="font-['Playfair_Display'] text-3xl font-semibold text-[#2f2e17] md:text-4xl">Reserve a Puppy</h1>
+			<p class="mt-3 text-sm leading-relaxed text-neutral-600">
+				Enter the password to view the agreement and deposit form.
+			</p>
+			<form id="reserve-gate-form" class="mt-8">
+				<label for="reserve-password" class="text-sm font-medium text-neutral-800">Password</label>
+				<input
+					id="reserve-password"
+					name="password"
+					type="password"
+					required
+					autocomplete="current-password"
+					class="mt-2 w-full rounded-xl border border-neutral-300 px-4 py-3 text-base text-neutral-900 outline-none transition focus:border-[#5E5C2D] focus:ring-2 focus:ring-[#5E5C2D]/20"
+				/>
+				<p id="reserve-gate-error" class="mt-3 hidden text-sm text-red-700" role="alert">
+					That password is not correct.
+				</p>
+				<button
+					type="submit"
+					class="mt-6 w-full rounded-full bg-[#5E5C2D] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+				>
+					Continue
+				</button>
+			</form>
+		</div>
+	</section>
+
+	<div id="reserve-content">
 	<section class="border-b border-neutral-200 bg-[#5E5C2D] pt-24 pb-14 text-white md:pt-28">
 		<div class="mx-auto max-w-3xl px-6 text-center md:px-10">
 			<p class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">Devon Goldens</p>
@@ -108,4 +149,55 @@ const phone = contact?.phone ?? '';
 			</div>
 		</section>
 	)}
+	</div>
 </Layout>
+
+<style is:global>
+	#reserve-content {
+		display: none;
+	}
+
+	html[data-reserve-unlocked='true'] #reserve-gate {
+		display: none;
+	}
+
+	html[data-reserve-unlocked='true'] #reserve-content {
+		display: block;
+	}
+</style>
+
+<script>
+	const PASSWORD = 'dakodamiggy2026';
+	const STORAGE_KEY = 'devon-goldens-reserve-unlock';
+	const form = document.getElementById('reserve-gate-form');
+	const input = document.getElementById('reserve-password') as HTMLInputElement | null;
+	const error = document.getElementById('reserve-gate-error');
+
+	const unlock = () => {
+		document.documentElement.dataset.reserveUnlocked = 'true';
+		try {
+			sessionStorage.setItem(STORAGE_KEY, '1');
+		} catch {
+			/* keep the page unlocked for this visit even if storage is blocked */
+		}
+		window.scrollTo(0, 0);
+		window.dispatchEvent(new Event('resize'));
+	};
+
+	form?.addEventListener('submit', (event) => {
+		event.preventDefault();
+		const value = input?.value.trim() ?? '';
+		if (value === PASSWORD) {
+			error?.classList.add('hidden');
+			unlock();
+			return;
+		}
+		error?.classList.remove('hidden');
+		input?.focus();
+		input?.select();
+	});
+
+	input?.addEventListener('input', () => {
+		error?.classList.add('hidden');
+	});
+</script>
